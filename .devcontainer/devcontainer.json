@@ -1,0 +1,15 @@
+{
+  "name": "spec-driven-template",
+  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+  "workspaceFolder": "/workspaces/spec-driven-template",
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  }
+  // プロジェクトの言語に合わせて features や postCreateCommand を追加してください。
+  // 例（Node.js の場合）:
+  //   "features": {
+  //     "ghcr.io/devcontainers/features/node:1": { "version": "lts" },
+  //     "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  //   },
+  //   "postCreateCommand": "npm install"
+}

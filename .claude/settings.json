@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Skill(prd-writing)",
+      "Skill(functional-design)",
+      "Skill(architecture-design)",
+      "Skill(repository-structure)",
+      "Skill(development-guidelines)",
+      "Skill(glossary-creation)",
+      "Skill(steering)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/*.pem)",
+      "Read(./**/id_rsa)"
+    ],
+    "ask": []
+  },
+  "hooks": {}
+}
