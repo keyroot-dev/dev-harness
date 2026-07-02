@@ -7,8 +7,8 @@ allowed-tools: Read, Write, Edit
 # 開発ガイドラインスキル
 
 チーム開発に必要な2つの要素をカバーします:
-1. 実装時のコーディング規約 (implementation-guide.md)
-2. 開発プロセスの標準化 (process-guide.md)
+1. 実装時のコーディング規約 (./guides/implementation.md)
+2. 開発プロセスの標準化 (./guides/process.md)
 
 ## 前提条件
 
