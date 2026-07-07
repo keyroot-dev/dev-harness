@@ -12,7 +12,7 @@ allowed-tools: Read, Write, Edit
 
 ## 前提条件
 
-開発ガイドラインは、その多くが**描写（description）**である（正本: `CLAUDE.md`「ドキュメント管理の原則」）。テスト・Lint・型チェック・CI の具体は、**Walking Skeleton が実際に立てた設定を真実の源として種を採る**。抽象的な理想を先に書くのではなく、動く骨格の設定を描写して具体化する。
+開発ガイドラインは、その多くが**描写（description）**である（正本: `.claude/rules/document-management.md`）。テスト・Lint・型チェック・CI の具体は、**Walking Skeleton が実際に立てた設定を真実の源として種を採る**。抽象的な理想を先に書くのではなく、動く骨格の設定を描写して具体化する。
 
 ### 参照元（真実の源）
 

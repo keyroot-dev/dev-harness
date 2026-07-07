@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 このコマンドは、**意図（intent）を先に固め、動く土台（Walking Skeleton）を立ててから、その土台を描写（description）するドキュメントを導出する**流れで、プロジェクトの永続ドキュメントと最初の動くコードを用意します。
 
-> **設計の正本はここで再定義しない。** 「いつ承認で止まるか」は `CLAUDE.md`「承認ゲートの方針（正本）」、「どのドキュメントを前/後に書くか」は `CLAUDE.md`「ドキュメント管理の原則（正本）」に従う。本コマンドはそれを実行する手順にすぎない。
+> **設計の正本はここで再定義しない。** 「いつ承認で止まるか」は `.claude/rules/spec-driven-workflow.md`「承認ゲートの方針（正本）」、「どのドキュメントを前/後に書くか」は `.claude/rules/document-management.md`「意図と描写の分離（正本）」に従う。本コマンドはそれを実行する手順にすぎない。
 >
 > 要点:
 > - **意図（先）**: `product-requirements.md`（承認ゲート1）と `architecture.md` の芯（依存の向き・レイヤ境界・技術スタック）、およびPRDから導出する `docs/backlog.md`（機能単位の全体俯瞰）。

@@ -31,6 +31,9 @@ Thumbs.db
 .steering/*
 !.steering/.gitkeep
 
+# Serena (MCP) local state
+.serena/
+
 .claude/settings.local.json
 
 # === 言語別（使う言語に合わせて調整してください） ===

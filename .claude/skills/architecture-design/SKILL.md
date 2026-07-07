@@ -10,7 +10,7 @@ allowed-tools: Read, Write
 
 ## アーキテクチャは「芯」と「本体」の2段で育てる
 
-`CLAUDE.md`「ドキュメント管理の原則（正本）」に従い、`architecture.md` は次の2段で作る。
+`.claude/rules/document-management.md`「意図と描写の分離（正本）」に従い、`architecture.md` は次の2段で作る。
 
 - **芯（コア / 意図・intent）= コードの前に、薄く書く**
   - 内容: 依存の向き（依存はすべて内向き）・レイヤ境界・技術スタック（言語/ランタイム/テスト・Lintツール）
