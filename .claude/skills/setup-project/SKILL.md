@@ -11,7 +11,7 @@ disable-model-invocation: true
 > **設計の正本はここで再定義しない。** 「いつ承認で止まるか」は `CLAUDE.md`「承認ゲートの方針（正本）」、「どのドキュメントを前/後に書くか」は `CLAUDE.md`「ドキュメント管理の原則（正本）」に従う。本コマンドはそれを実行する手順にすぎない。
 >
 > 要点:
-> - **意図（先）**: `product-requirements.md`（承認ゲート1）と `architecture.md` の芯（依存の向き・レイヤ境界・技術スタック）。
+> - **意図（先）**: `product-requirements.md`（承認ゲート1）と `architecture.md` の芯（依存の向き・レイヤ境界・技術スタック）、およびPRDから導出する `docs/backlog.md`（機能単位の全体俯瞰）。
 > - **動く土台**: Walking Skeleton（端から端まで動く縦切り1本＋CI・フィットネス関数が緑）。動くことを見せて承認ゲート2。
 > - **描写（後）**: `repository-structure.md`・`development-guidelines.md` は骨格の現実から導出。`functional-design.md`・`glossary.md` はスタブで置き、以後 `/add-feature` が機能ごとに育てる。憶測でコードの前に描写を書かない（context poisoning を避ける）。
 
@@ -67,9 +67,17 @@ ls docs/ideas/
    - 技術スタック（言語・ランタイム・テスト/Lintツール）
    - これらは Walking Skeleton を1本通すのに必要な最小限の「決定」に限る。詳細な構造は骨格の後に育てる。
 
+### ステップ2.5: バックログの種まき（意図 / intent）
+
+1. 承認済みの `docs/product-requirements.md` から、**機能単位の一覧**を導出する
+2. `.claude/skills/progress-report/templates/backlog.md` のテンプレートに従い、`docs/backlog.md` を作成する
+   - 行の存在と優先度は意図（PRD由来）。状態はすべて `[ ] 未着手` で置く
+   - 承認済みPRDからの導出なので連続生成してよい（承認ゲートは増やさない）
+3. 以後、状態列は `/add-feature` が機械更新し、`/progress-report` がここから全体俯瞰を導出する
+
 ### ステップ3: Walking Skeleton の実装（動く土台）
 
-1. PRDのコア機能から、**端から端まで動く最小の縦切り1本**を選ぶ（例: ToDoアプリなら `add`→`list` だけ）。
+1. PRDのコア機能から、**端から端まで動く最小の縦切り1本**を選ぶ（例: ToDoアプリなら `add`→`list` だけ）。バックログ（ステップ2.5）の最優先の機能から選ぶとよい。
 2. `Skill('add-feature')` の実装フロー（TDD / Red-Green-Refactor）を用いて、この縦切りを実装する。あわせて CI とフィットネス関数（アーキ境界検査・テストランナー）を立て、緑にする。
 3. **動くことをユーザーに見せて承認を待つ（＝承認ゲート2: 動く土台）。**
    ```
@@ -104,6 +112,7 @@ ls docs/ideas/
 ## 完了条件
 
 - `product-requirements.md`（承認済み）と `architecture.md` の芯が作成されている
+- `docs/backlog.md` がPRDから機能単位に導出されている
 - Walking Skeleton が動作し、CI・フィットネス関数が緑（承認済み）
 - `repository-structure.md`・`development-guidelines.md` が骨格の現実から導出されている
 - `functional-design.md`・`glossary.md` がスタブとして存在する（＝この時点では最小で正しい）
@@ -115,6 +124,7 @@ ls docs/ideas/
 意図（先に確定）:
 ✅ docs/product-requirements.md（承認済み）
 ✅ docs/architecture.md（芯）
+✅ docs/backlog.md（PRDから機能単位に導出 / 状態列は以後 /add-feature が機械更新）
 
 動く土台:
 ✅ Walking Skeleton（動作確認済み / CI・フィットネス関数が緑）
@@ -133,6 +143,8 @@ ls docs/ideas/
 
 - ドキュメントの編集: 普通に会話で依頼してください
   例: 「PRDに新機能を追加して」「architecture.mdの芯を見直して」
+
+- 進捗の確認・報告: /progress-report（全体俯瞰は docs/backlog.md を開くだけ）
 
 - ドキュメントレビュー: /review-docs [パス]
   例: /review-docs docs/product-requirements.md

@@ -8,7 +8,8 @@
       "Skill(repository-structure)",
       "Skill(development-guidelines)",
       "Skill(glossary-creation)",
-      "Skill(steering)"
+      "Skill(steering)",
+      "Skill(progress-report)"
     ],
     "deny": [
       "Read(./.env)",
