@@ -1,0 +1,13 @@
+# このテンプレートは「境界を文書の禁止で終わらせず機械強制せよ」と説いている。
+# 設定自身の不変条件も同じ規律に従い、push / PR のたびに Fitness Function で検査する。
+name: check-config
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 設定の整合性チェック（Fitness Function）
+        run: bash scripts/check-config.sh

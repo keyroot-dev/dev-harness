@@ -18,6 +18,8 @@ CLAUDE.md        ワークフローとプロジェクト規約（要編集）
 docs/            永続ドキュメント（何を作るか）
 .steering/       作業単位のドキュメント（今回何をするか）
 .devcontainer/   Dev Container 定義（任意）
+.github/         設定の自己検査（check-config.sh）を回す CI
+scripts/         check-config.sh（設定リポジトリ自身の Fitness Function）
 ```
 
 ## 使い方
@@ -148,13 +150,14 @@ docs/ideas/*.md → /setup-project ───────────────
 bash scripts/check-config.sh
 ```
 
-検査内容（違反があれば非ゼロ終了し、CI で落とせます）:
+検査内容（違反があれば非ゼロ終了。`.github/workflows/check-config.yml` により push / PR ごとに CI でも自動実行されます）:
 
 - 各スキルに `SKILL.md` が存在する
 - `.claude/` 配下で参照される `Skill(<name>)` が実在するスキルである（skill 本文・settings.json をまたいで検査）
 - `.claude/` 配下で `subagent_type` に指名されるエージェントが実在する
+- `.claude/` 配下・`CLAUDE.md`・`README.md` から相対参照される `.md` ファイルが実在する（利用者プロジェクトで生成される `docs/` 等のプレースホルダーは対象外）
 
-スキルやエージェントをリネーム・削除したのに参照が古いまま、という「リンク切れ」を防ぎます。
+スキル・エージェント・ガイドをリネーム・削除したのに参照が古いまま、という「リンク切れ」を防ぎます。「正本（Single Source of Truth）」の網はファイル間参照で編まれているため、その断線は機械で検出します。
 
 ## ライセンス
 
