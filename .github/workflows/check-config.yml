@@ -11,3 +11,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: 設定の整合性チェック（Fitness Function）
         run: bash scripts/check-config.sh
+      - name: スクリプト自身の回帰テスト
+        run: bash scripts/tests/run-tests.sh
