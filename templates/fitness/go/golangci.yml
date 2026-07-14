@@ -1,0 +1,34 @@
+# アーキテクチャ境界 Fitness Function（Go 用の最小サンプル / golangci-lint depguard）。
+#
+# 使い方: この rules を実プロジェクトの .golangci.yml に統合し、
+#   golangci-lint run
+# を CI に入れる（モジュールパス example.com/app は実プロジェクトに合わせて直す）。
+#
+# ルールの意味（正本: .claude/skills/architecture-design/guide.md「依存性のルール」）:
+#   依存はすべて内向き。entities は何にも依存せず、use-cases は外側を知らない。
+
+linters:
+  enable:
+    - depguard
+
+linters-settings:
+  depguard:
+    rules:
+      entities-は何にも依存しない:
+        files:
+          - "**/entities/**"
+        deny:
+          - pkg: "example.com/app/internal/usecases"
+            desc: "entities から外側（use-cases）への依存は禁止（心臓部の独立）"
+          - pkg: "example.com/app/internal/adapters"
+            desc: "entities から外側（adapters）への依存は禁止"
+          - pkg: "example.com/app/internal/infrastructure"
+            desc: "entities から外側（infrastructure）への依存は禁止"
+      use-cases-は外側を知らない:
+        files:
+          - "**/usecases/**"
+        deny:
+          - pkg: "example.com/app/internal/adapters"
+            desc: "use-cases から adapters への依存は禁止（依存は内向き）"
+          - pkg: "example.com/app/internal/infrastructure"
+            desc: "use-cases から infrastructure への依存は禁止（I/F を所有し実装させる = DIP）"

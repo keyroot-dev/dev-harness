@@ -27,6 +27,8 @@ scripts/         check-config.sh（設定リポジトリ自身の Fitness Functi
                  backlog-state.sh（backlog 状態列の正規更新経路）
                  hooks/（編集・停止のたびに上記検査を自動実行するガードレール）
                  tests/（これらのスクリプト自身の回帰テスト）
+templates/       fitness/（アーキ境界検査の言語別サンプル = Fitness Function スターターキット。
+                 Walking Skeleton 時に1本立てるのがゲート2の合格条件）
 ```
 
 ## 使い方

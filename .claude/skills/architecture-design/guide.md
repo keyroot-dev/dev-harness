@@ -36,6 +36,8 @@
 > 他のスキル・コマンド・エージェント（`repository-structure` / `development-guidelines` / `implementation-validator` / `add-feature` 等）は、この規則を**再定義せず参照し、各自の文脈に適用するだけ**にする。
 > 規則の表現を見直すときは、必ずこの節だけを変更すればよい状態に保つこと。
 > （`template.md` の図は**生成される `docs/architecture.md` を自己完結させるための出力用**であり、規則の二重定義ではない。規則の意味を変えるならここを直す。）
+>
+> 🔧 **執行機構の雛形**: この規則を Lint/CI で機械強制するための言語別サンプル設定（dependency-cruiser / import-linter / depguard / ArchUnit）は `templates/fitness/README.md` にある。Walking Skeleton の時点でそこから1本立てる（承認ゲート2の合格条件）。
 
 **ソースコードの依存は、必ず内側（高レベルの方針）に向ける。** 外側（詳細）が内側に依存し、内側は外側を一切知らない。これがクリーンアーキテクチャの唯一にして最重要のルールです。
 
