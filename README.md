@@ -240,6 +240,40 @@ bash scripts/check-config.sh
 
 検査スクリプト自身も `scripts/tests/run-tests.sh`（依存ゼロの純 bash）で回帰テストされ、CI で毎回実行されます。
 
+## 並列開発と夜間バッチ運用
+
+`docs/backlog.md` の「依存」列と git worktree を組み合わせると、複数機能を安全に並列実装できます。並列可能かどうかは人が推測せず、機械が判定します（`bash scripts/progress.sh` が「並列着手可能」を列挙し、依存違反を警告します）。
+
+```
+docs/backlog.md
+| # | 機能     | 依存   | 状態        |
+| 1 | 認証     | -      | [x] 完了    |
+| 2 | プロフィール | 認証 | [ ] 未着手  | ─┐ 依存が満たされた未着手
+| 3 | 通知     | 認証   | [ ] 未着手  | ─┤ → worktree を切って並列に着手できる
+| 4 | 課金     | 通知   | [ ] 未着手  |   （課金は通知の完了待ち）
+
+ main ──┬── worktree A（feat/profile）… claude で /add-feature プロフィール
+        └── worktree B（feat/notify） … claude で /add-feature 通知
+             ↓ それぞれ完了後 main へマージ（.steering/ は gitignore なので衝突しない）
+```
+
+```bash
+# 1. 並列着手できる機能を機械判定
+bash scripts/progress.sh          # 「並列着手可能: プロフィール、通知」
+
+# 2. 機能ごとに worktree を切り、別セッションで /add-feature を実行
+git worktree add ../myapp-profile -b feat/profile
+git worktree add ../myapp-notify  -b feat/notify
+(cd ../myapp-profile && claude --permission-mode acceptEdits "/add-feature プロフィール")
+(cd ../myapp-notify  && claude --permission-mode acceptEdits "/add-feature 通知")
+
+# 3. 完了後にマージして片付け
+git merge feat/profile && git merge feat/notify
+git worktree remove ../myapp-profile ../myapp-notify
+```
+
+**夜間バッチ運用**: `/add-feature` は無停止設計（承認ゲートは意図の変更時のみ）なので、ヘッドレスで夜に回して朝レビューできます。`claude -p "/add-feature 通知"` をスケジューラ（cron / CI の schedule トリガー / Claude Code の `/schedule`）から起動するだけです。翌朝は `bash scripts/progress.sh --since <昨日の日付>` で「昨夜完了した振る舞い」を確認し、`/code-review` を掛けてからマージします。
+
 ## 規律の機械的強制（hooks）
 
 規律を文書の「お願い」で終わらせず、hooks（`settings.json`）で決定論的に強制します。編集・停止のライフサイクルに検査が張り付いているため、違反はその瞬間に検出されます:

@@ -73,6 +73,7 @@ ls docs/ideas/
 1. 承認済みの `docs/product-requirements.md` から、**機能単位の一覧**を導出する
 2. `.claude/skills/progress-report/templates/backlog.md` のテンプレートに従い、`docs/backlog.md` を作成する
    - 行の存在と優先度は意図（PRD由来）。状態はすべて `[ ] 未着手` で置く
+   - 依存列も PRD から読み取れる範囲で埋める（他機能が先に無いと作れない機能にその機能名を1つ。無ければ `-`）。これが後の並列開発（worktree モード）の判定材料になる
    - 承認済みPRDからの導出なので連続生成してよい（承認ゲートは増やさない）
 3. 以後、状態列は `/add-feature` が機械更新し、`/progress-report` がここから全体俯瞰を導出する
 

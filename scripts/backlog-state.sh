@@ -31,8 +31,9 @@ case "$cmd" in
   *) echo "❌ 不明なコマンド: ${cmd}（start | done）"; exit 1 ;;
 esac
 
-# 「機能」列（$3）に部分一致し、状態列（$5）にマーカーを持つデータ行を数える
-matched="$(awk -F'|' -v f="$feature" 'index($3, f) && $5 ~ /\[/ { c++ } END { print c + 0 }' docs/backlog.md)"
+# 「機能」列（$3）に部分一致し、状態列（$6）にマーカーを持つデータ行を数える
+# （列構成の正本: .claude/skills/progress-report/templates/backlog.md — | # | 機能 | 優先度 | 依存 | 状態 | steering |）
+matched="$(awk -F'|' -v f="$feature" 'index($3, f) && $6 ~ /\[/ { c++ } END { print c + 0 }' docs/backlog.md)"
 
 if [ "$matched" -gt 1 ]; then
   echo "❌ 機能名『${feature}』が backlog の複数行に一致します。一意になる名前を指定してください"
@@ -47,7 +48,7 @@ if [ "$matched" -eq 0 ]; then
     # バックログ外の着手＝スコープ追加。行を追加する（完了報告で明示する運用は
     # backlog テンプレートの「運用ルール」に従う）。表の最終行の直後に挿入する。
     n="$(awk -F'|' '$2 ~ /^[ \t]*[0-9]+[ \t]*$/ { if ($2 + 0 > m) m = $2 + 0 } END { print m + 1 }' docs/backlog.md)"
-    awk -v row="| ${n} | ${feature} | 中 | [-] 実装中 | ${steering} |" '
+    awk -v row="| ${n} | ${feature} | 中 | - | [-] 実装中 | ${steering} |" '
       /^\|/ { last = NR }
       { lines[NR] = $0 }
       END {
@@ -65,9 +66,9 @@ if [ "$matched" -eq 0 ]; then
 fi
 
 awk -F'|' -v OFS='|' -v f="$feature" -v cmd="$cmd" -v s="$steering" '
-  index($3, f) && $5 ~ /\[/ {
-    if (cmd == "start") { $5 = " [-] 実装中 "; $6 = " " s " " }
-    else                { $5 = " [x] 完了 " }
+  index($3, f) && $6 ~ /\[/ {
+    if (cmd == "start") { $6 = " [-] 実装中 "; $7 = " " s " " }
+    else                { $6 = " [x] 完了 " }
   }
   { print }
 ' docs/backlog.md > "$tmp" && mv "$tmp" docs/backlog.md
