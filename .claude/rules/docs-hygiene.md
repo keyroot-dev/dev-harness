@@ -9,5 +9,5 @@ paths:
 
 - 描写ドキュメントに、実在しないコードの構成・用語・設定を憶測で書かない
 - 意図ドキュメント（PRD / architecture.md の芯）を実装の都合で直接書き換えない（変更案として提示し承認を仰ぐ）
-- `docs/backlog.md` の状態列を手で更新しない
+- `docs/backlog.md` の状態列を手で更新しない（正規経路は `bash scripts/backlog-state.sh start|done`。Edit/Write による状態マーカーの変更は hooks が機械的にブロックする）
 - 時点スナップショット（進捗報告書等）を `docs/` に保存しない

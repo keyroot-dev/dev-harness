@@ -4,9 +4,11 @@
   "workspaceFolder": "/workspaces/spec-driven-template",
   "features": {
     // Node.js は Playwright MCP（npx）用、uv は Serena MCP（uvx）用（.mcp.json 参照）
+    // jq は hooks（scripts/hooks/ のフック入力 JSON 解析）用
     "ghcr.io/devcontainers/features/node:1": { "version": "lts" },
     "ghcr.io/va-h/devcontainers-features/uv:1": {},
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
+    "ghcr.io/devcontainers-extra/features/jq-likes:2": {}
   }
   // プロジェクトの言語に合わせて features や postCreateCommand を追加してください。
   // 例（Node.js プロジェクトの場合）:
