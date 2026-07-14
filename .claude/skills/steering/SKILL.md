@@ -58,6 +58,7 @@ allowed-tools: Read, Write, Edit
    - 各フェーズのタスクを具体的に記述
    - サブタスクも明確に
    - 実装の順序を明記
+   - 振る舞いは PRD の受け入れ条件（EARS 記法。正本: `prd-writing/SKILL.md`「受け入れ条件（EARS 記法）」）から導出する。EARS の1条件が tasklist の1振る舞い（= 1テスト）に対応する
 
 ## モード2: 実装（最重要）
 
