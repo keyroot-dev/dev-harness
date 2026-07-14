@@ -1,6 +1,6 @@
 ---
 name: commit-message
-description: リポジトリのコミット規約（Conventional Commits・日本語サマリ）に従ったコミットメッセージを生成してコミットする。「コミットして」「コミットメッセージを作って」「変更を保存して」など git commit に関わる依頼のときに必ず使用。main/master 上での直接コミットをブランチ作成で防ぐ。
+description: リポジトリのコミット規約（Conventional Commits・日本語サマリ）に従ったコミットメッセージを生成してコミットする。「コミットして」「コミットメッセージを作って」「変更を保存して」など git commit に関わる依頼のときに必ず使用。main/dev 等の統合ブランチ上での直接コミットを、起点確認つきのブランチ作成で防ぐ。
 argument-hint: [変更内容の補足（省略可）]
 allowed-tools: Bash, Read, Grep, Glob
 ---
@@ -10,14 +10,15 @@ allowed-tools: Bash, Read, Grep, Glob
 変更内容（diff）から規約準拠のコミットメッセージを導出し、ブランチ規律を守ってコミットするスキルです。
 
 ```
-ブランチ確認 ──▶ 規約と実例の取得 ──▶ 変更の把握 ──▶ メッセージ生成 ──▶ コミット
-（mainなら切る）  （正本＋git log）    （diffが真実）   （型式に当てはめ）  （log -1で確認）
+ブランチ確認 ────────▶ 規約と実例の取得 ──▶ 変更の把握 ──▶ メッセージ生成 ──▶ コミット
+（main/devなら起点を     （正本＋git log）    （diffが真実）   （型式に当てはめ）  （log -1で確認）
+  ユーザーに確認して切る）
 ```
 
 ## 原則（このスキルの正本）
 
 - **規約はこのスキルに書き写さない**: コミット規約の正本は、プロジェクトの `docs/development-guidelines.md` の「コミットメッセージ規約」。まだ生成されていなければ、テンプレート既定の `development-guidelines/guides/process.md`「コミットメッセージの規約」（Conventional Commits）に従う。
-- **main へ直接コミットしない**: main への変更は PR を経由する（正本: `development-guidelines/guides/process.md`「ブランチ戦略」）。main/master 上にいたら、コミットの前に必ずトピックブランチを切る。
+- **main へ直接コミットしない**: main への変更は PR を経由する（正本: `development-guidelines/guides/process.md`「ブランチ戦略」）。main / master / dev などの統合ブランチ上にいたら、コミットの前に必ずトピックブランチを切る。どこから切るかは人の判断なので、ユーザーに確認する。
 - **メッセージは diff の描写**: diff に無いことを書かない・diff にある本質を落とさない。読者は `git log --oneline` を流し読みする未来の開発者である。
 - **サマリ1行を基本とする**: 1行で「何を・なぜ」が伝わるなら本文（body）は書かない。本文は破壊的変更（BREAKING CHANGE）や、diff から読み取れない理由の説明が必要なときだけ最小限に書く。
 
@@ -29,7 +30,8 @@ allowed-tools: Bash, Read, Grep, Glob
 git branch --show-current
 ```
 
-- **main / master の場合**: `git switch -c <type>/<短い内容>` でブランチを切ってから進む（未コミットの変更はそのまま持っていける）。名前の例: `feat/task-priority`、`fix/login-error`、`docs/update-readme`。
+- **main / master / dev などの統合ブランチ上の場合**: 直接コミットせず、トピックブランチを切ってから進む。ただし**起点をどこにするかはユーザーに確認する**（例:「main と dev のどちらから切りますか?」。AskUserQuestion があれば使う）。起点が決まったら `git switch -c <type>/<短い内容> <起点ブランチ>` で作成する（未コミットの変更はそのまま持っていける）。名前の例: `feat/task-priority`、`fix/login-error`、`docs/update-readme`。
+  - 確認を省略してよいのは、統合ブランチが1本しか存在しない場合（`git branch -a` で main しか無い等）。その場合はそこから切る旨を報告して進む。
 - **既にトピックブランチ上の場合**: そのまま進む。ただしブランチ名と今回の変更の関心事が明らかに別物なら、新しいブランチを提案する。
 
 ### ステップ2: 規約と実例の取得
