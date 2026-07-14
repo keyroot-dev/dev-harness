@@ -10,7 +10,8 @@
       "Skill(glossary-creation)",
       "Skill(steering)",
       "Skill(progress-report)",
-      "Skill(change-spec)"
+      "Skill(change-spec)",
+      "Skill(commit-message)"
     ],
     "deny": [
       "Read(./.env)",
