@@ -289,7 +289,7 @@ git worktree remove ../myapp-profile ../myapp-notify
 ```
 
 - フックは入力 JSON の解析に `jq` を使います（devcontainer には同梱。無い環境では検査をスキップして許可する fail-open）
-- `docs/backlog.md` の状態列は `bash scripts/backlog-state.sh start|done` だけが更新できます（`/add-feature` もこれを使う）
+- `docs/backlog.md` の状態列は `bash scripts/backlog-state.sh start|done|split` だけが更新できます（`/add-feature` もこれを使う。`split` は計画時に機能が大きすぎた場合の縦切り分割を backlog に反映する）
 - 描写ドキュメントの機械検査は単体でも実行できます: `bash scripts/check-drift.sh`（パス実在は ❌、用語の生存は ⚠️。意味的な乖離は `drift-auditor` サブエージェントが担当）
 
 ## ライセンス

@@ -148,4 +148,33 @@ seed_backlog
 run backlog-state.sh done "タスク"
 assert 1 "複数行に一致"
 
+test_case "backlog-state: split で該当行を改名し、残りの縦切りを未着手で直下に追加する"
+sandbox bs-split
+seed_backlog
+run backlog-state.sh start "タスク追加" "20260104-tsuika"
+run backlog-state.sh split "タスク追加" "追加（基本）" "追加（期限）" "追加（タグ）"
+# 改名: 元の行が今回の縦切り名になり、状態・steering は保持される
+grep -q '| 追加（基本） | 高 | - | \[-\] 実装中 | 20260104-tsuika |' "$SB/docs/backlog.md" && \
+# 行追加: 優先度は元の行を引き継ぎ、依存は直前の縦切りに連鎖する
+grep -q '| 追加（期限） | 高 | 追加（基本） | \[ \] 未着手 | - |' "$SB/docs/backlog.md" && \
+grep -q '| 追加（タグ） | 高 | 追加（期限） | \[ \] 未着手 | - |' "$SB/docs/backlog.md" && \
+# 挿入位置: 追加行は元の行の直下（既存の次行「タスク一覧」より前）に入る
+awk '/追加（タグ）/ { tag = NR } /タスク一覧/ { next_row = NR } END { exit !(tag > 0 && tag < next_row) }' "$SB/docs/backlog.md" && RC=0 || RC=1
+assert_rc 0
+
+test_case "backlog-state: split 後は今回の縦切り名で done できる"
+sandbox bs-split-done
+seed_backlog
+run backlog-state.sh start "タスク追加" "20260104-tsuika"
+run backlog-state.sh split "タスク追加" "追加（基本）" "追加（期限）"
+run backlog-state.sh done "追加（基本）"
+grep -q '| 追加（基本） | 高 | - | \[x\] 完了 |' "$SB/docs/backlog.md" && RC=0 || RC=1
+assert_rc 0
+
+test_case "backlog-state: 残りの縦切り名なしの split はエラーにする"
+sandbox bs-split-noargs
+seed_backlog
+run backlog-state.sh split "タスク追加" "追加（基本）"
+assert 1 "残りの縦切り名が1つ以上必要"
+
 fi  # jq ガードの終わり

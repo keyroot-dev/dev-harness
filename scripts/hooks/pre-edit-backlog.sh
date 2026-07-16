@@ -59,5 +59,6 @@ cat >&2 <<'EOF'
    状態の更新は必ず正規経路を使ってください:
      bash scripts/backlog-state.sh start <機能名> <steering名>   # 着手: [-] 実装中
      bash scripts/backlog-state.sh done  <機能名>                # 完了: [x] 完了
+     bash scripts/backlog-state.sh split <機能名> <今回の縦切り名> <残りの縦切り名>...  # 機能分割
 EOF
 exit 2
