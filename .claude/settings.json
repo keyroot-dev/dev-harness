@@ -12,7 +12,8 @@
       "Skill(progress-report)",
       "Skill(change-spec)",
       "Skill(commit-message)",
-      "Skill(extend-harness)"
+      "Skill(extend-harness)",
+      "Skill(tech-research)"
     ],
     "deny": [
       "Read(./.env)",
