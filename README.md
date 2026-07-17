@@ -202,12 +202,13 @@ Serena・Playwright はローカルに `uv`・`Node.js` が必要です（`.devc
 
 ## rules による規律の配置
 
-プロジェクトの規律は CLAUDE.md に一枚岩で書かず、`.claude/rules/` に**1ファイル1トピック**で分割しています（Claude Code の [rules 機構](https://code.claude.com/docs/en/memory)）。ロード条件を使い分けることで、特定の場面でしか要らない規律を常時コンテキストの外に置けます（常時ロードの2ファイルは旧 CLAUDE.md と同格に毎セッション載るため、分割そのものは常時ロード量を減らしません。効くのは `paths` によるスコープです）。
+プロジェクトの規律は CLAUDE.md に一枚岩で書かず、`.claude/rules/` に**1ファイル1トピック**で分割しています（Claude Code の [rules 機構](https://code.claude.com/docs/en/memory)）。ロード条件を使い分けることで、特定の場面でしか要らない規律を常時コンテキストの外に置けます（常時ロードのファイルは旧 CLAUDE.md と同格に毎セッション載るため、分割そのものは常時ロード量を減らしません。効くのは `paths` によるスコープです）。
 
 ```
                      ┌─ 常時ロード（CLAUDE.md と同格・毎セッション）
-                     │   spec-driven-workflow.md   承認ゲートの方針（正本）ほか
-                     │   document-management.md    意図と描写の分離（正本）ほか
+                     │   spec-driven-workflow.md      承認ゲートの方針（正本）ほか
+                     │   document-management.md       意図と描写の分離（正本）ほか
+                     │   external-dependencies.md     外部依存は tech-research で裏取り
  .claude/rules/ ─────┤
                      └─ パス条件付き（該当ファイルを扱う時だけロード）
                          docs-hygiene.md          paths: docs/**

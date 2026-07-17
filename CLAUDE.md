@@ -20,6 +20,7 @@
 |---|---|---|
 | `.claude/rules/spec-driven-workflow.md` | 常時 | 基本フロー・**承認ゲートの方針（正本）**・ステアリング運用・開発プロセス |
 | `.claude/rules/document-management.md` | 常時 | **意図と描写の分離（正本）**・`docs/`／`.steering/` の役割 |
+| `.claude/rules/external-dependencies.md` | 常時 | 外部依存の仕様に依拠する作業での `tech-research` 裏取り義務 |
 | `.claude/rules/docs-hygiene.md` | `docs/**` を扱うとき | docs 編集時のガード（backlog 状態列の手動更新禁止など） |
 | `.claude/rules/config-maintenance.md` | `.claude/**`・`scripts/**` を扱うとき | テンプレート自身の保守規律（check-config.sh の実行など） |
 
