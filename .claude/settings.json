@@ -11,7 +11,8 @@
       "Skill(steering)",
       "Skill(progress-report)",
       "Skill(change-spec)",
-      "Skill(commit-message)"
+      "Skill(commit-message)",
+      "Skill(extend-harness)"
     ],
     "deny": [
       "Read(./.env)",
